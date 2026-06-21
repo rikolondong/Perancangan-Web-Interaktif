@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riko Reky Londong | Professional Portfolio</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="bg-blob-1"></div>
+    <div class="bg-blob-2"></div>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h1>Riko<span>.</span></h1>
+        </div>
+        
+        <ul class="nav-links">
+            <li><a href="#home" class="active"><i class="fa-solid fa-house"></i> Beranda</a></li>
+            <li><a href="#expertise"><i class="fa-solid fa-bolt"></i> Keahlian</a></li>
+            <li><a href="#portfolio"><i class="fa-solid fa-layer-group"></i> Portofolio</a></li>
+            <li><a href="#contact"><i class="fa-solid fa-envelope"></i> Kontak</a></li>
+        </ul>
+
+        <div class="theme-switch-wrapper">
+            <button id="themeToggle" class="theme-toggle" aria-label="Toggle Dark/Light Mode">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        
+        <section id="home" class="hero">
+            <div class="hero-text">
+                <h3>Hello, I'm</h3>
+                <h1 class="text-gradient">Riko Reky Londong</h1>
+                
+                <div class="typing-container">
+                    Seorang <span class="typing-text"></span>
+                </div>
+                
+                <p>
+                    Menggabungkan teknologi, desain, dan strategi. Saya berfokus pada penciptaan solusi digital yang inovatif, mulai dari pengembangan web interaktif hingga infrastruktur cloud dan produksi media kreatif.
+                </p>
+                
+                <div class="cta-buttons">
+                    <a href="#portfolio" class="btn btn-primary">
+                        Lihat Karya Saya <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">
+                        <i class="fa-regular fa-comment-dots"></i> Mari Berdiskusi
+                    </a>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="glass-card">
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Tech Desk Workspace">
+                </div>
+            </div>
+        </section>
+
+        <section id="expertise">
+            <h2 class="section-title text-gradient">Area Keahlian</h2>
+            <div class="skills-container">
+                <div class="skill-card">
+                    <div class="skill-icon-wrapper">
+                        <i class="fa-solid fa-laptop-code"></i>
+                    </div>
+                    <h4>Web Development</h4>
+                    <p>Merancang dan mengembangkan website front-end yang interaktif, responsif, dan memberikan User Experience (UX) terbaik.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon-wrapper">
+                        <i class="fa-solid fa-photo-film"></i>
+                    </div>
+                    <h4>Media & Broadcasting</h4>
+                    <p>Produksi visual kreatif, sinematografi, *editing* video profesional, dan dokumentasi udara menggunakan drone.</p>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon-wrapper">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                    </div>
+                    <h4>Cloud & Data Analytics</h4>
+                    <p>Implementasi arsitektur cloud berbasis GCP dan analisis data cerdas menggunakan perangkat seperti Power BI.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="portfolio">
+            <h2 class="section-title text-gradient">Portofolio Pilihan</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-card">
+                    <div class="portfolio-img">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Web Dashboard">
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="tag">Web Design</span>
+                        <h3>Dashboard Analytics App</h3>
+                        <p>Desain UI/UX dan integrasi front-end untuk aplikasi dashboard analitik berbasis web yang responsif.</p>
+                        <a href="#" class="portfolio-link">Lihat Detail <i class="fa-solid fa-arrow-right-long"></i></a>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <div class="portfolio-img">
+                        <img src="https://images.unsplash.com/photo-1579869847514-7c1a19d2d2ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Media Production">
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="tag">Broadcasting</span>
+                        <h3>Company Profile Video</h3>
+                        <p>Produksi video profil perusahaan, termasuk pengambilan gambar udara (drone) dan proses *post-production*.</p>
+                        <a href="#" class="portfolio-link">Tonton Video <i class="fa-solid fa-arrow-right-long"></i></a>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <div class="portfolio-img">
+                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Cloud Network">
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="tag">Cloud Infrastructure</span>
+                        <h3>GCP Network Simulation</h3>
+                        <p>Simulasi dan penerapan infrastruktur jaringan server berbasis Google Cloud Platform untuk efisiensi data.</p>
+                        <a href="#" class="portfolio-link">Baca Studi Kasus <i class="fa-solid fa-arrow-right-long"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="contact-card">
+                <h2 class="section-title text-gradient" style="margin-bottom: 20px;">Mari Berkolaborasi</h2>
+                <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.6;">
+                    Punya ide proyek, kebutuhan riset IT, atau produksi media? Jangan ragu untuk menghubungi saya melalui platform di bawah ini.
+                </p>
+                <div class="social-icons">
+                    <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Riko Reky Londong. All Rights Reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

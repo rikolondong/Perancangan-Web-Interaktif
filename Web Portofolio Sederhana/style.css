@@ -1,0 +1,632 @@
+/* --- 1. CSS VARIABLES (SISTEM TEMA) --- */
+/* Mendefinisikan warna dan properti global di root untuk memudahkan perubahan */
+:root {
+    /* Tema Terang & Gradasi Biru (Default) */
+    --bg-color: #f0f4f8; 
+    --bg-gradient: linear-gradient(135deg, #f6f8fd 0%, #e0e8f5 100%);
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --accent: #2563eb;
+    --accent-light: #60a5fa;
+    --accent-gradient: linear-gradient(135deg, #1e40af, #3b82f6, #38bdf8);
+    --glass-bg: rgba(255, 255, 255, 0.75);
+    --glass-border: rgba(255, 255, 255, 0.6);
+    --shadow-soft: 0 10px 30px rgba(37, 99, 235, 0.1);
+    --shadow-hover: 0 15px 35px rgba(37, 99, 235, 0.2);
+    --sidebar-width: 250px;
+    
+    /* Variabel Khusus Tema Terang */
+    --sidebar-bg: rgba(255, 255, 255, 0.85);
+    --card-hover-bg: #ffffff;
+    --icon-bg: #ffffff;
+    --footer-bg: #ffffff;
+    --contact-bg: linear-gradient(to bottom, transparent, rgba(255,255,255,0.8));
+}
+
+/* Tema Gelap (Dark Mode) - Aktif ketika atribut data-theme="dark" diterapkan di HTML */
+[data-theme="dark"] {
+    --bg-color: #0f172a; 
+    --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --glass-bg: rgba(30, 41, 59, 0.75);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.3);
+    --shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.4);
+    
+    --sidebar-bg: rgba(15, 23, 42, 0.85);
+    --card-hover-bg: rgba(30, 41, 59, 0.95);
+    --icon-bg: #1e293b;
+    --footer-bg: #0f172a;
+    --contact-bg: linear-gradient(to bottom, transparent, #0f172a);
+}
+
+/* --- 2. RESET & BASE STYLES --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif; /* Menggunakan font Poppins */
+    scroll-behavior: smooth; /* Membuat efek scroll yang halus ketika link navigasi diklik */
+}
+
+body {
+    background: var(--bg-gradient);
+    color: var(--text-main);
+    overflow-x: hidden;
+    min-height: 100vh;
+    transition: background-color 0.4s ease, color 0.4s ease; /* Transisi halus saat ganti tema */
+}
+
+/* --- 3. BACKGROUND ANIMATIONS (BLOBS) --- */
+/* Bentuk abstrak bercahaya di latar belakang */
+.bg-blob-1 {
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    background: linear-gradient(to right, #93c5fd, #3b82f6);
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.4;
+    top: -150px;
+    left: -150px;
+    z-index: -1;
+    animation: moveBlob 12s infinite alternate ease-in-out;
+}
+
+.bg-blob-2 {
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    background: linear-gradient(to right, #60a5fa, #2dd4bf);
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.3;
+    bottom: -100px;
+    right: -100px;
+    z-index: -1;
+    animation: moveBlob2 15s infinite alternate ease-in-out;
+}
+
+/* Keyframes untuk menggerakkan Blobs */
+@keyframes moveBlob {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(150px, 100px) scale(1.1); }
+}
+
+@keyframes moveBlob2 {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-150px, -100px) scale(1.2); }
+}
+
+/* Utilities: Membuat teks berwarna gradasi */
+.text-gradient {
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+/* --- 4. SIDEBAR NAVIGATION --- */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-width);
+    height: 100vh;
+    background: var(--sidebar-bg);
+    backdrop-filter: blur(15px); /* Efek kaca (Glassmorphism) */
+    border-right: 1px solid var(--glass-border);
+    padding: 40px 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 5px 0 20px rgba(0,0,0,0.03);
+}
+
+.sidebar-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.sidebar-header h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: var(--text-main);
+}
+
+.sidebar-header h1 span {
+    color: var(--accent); /* Titik berwarna di sebelah logo */
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 20px;
+}
+
+.nav-links li a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.05rem;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 20px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.nav-links li a i {
+    font-size: 1.2rem;
+    width: 25px;
+    text-align: center;
+}
+
+/* State ketika menu di-hover atau sedang aktif */
+.nav-links li a:hover, .nav-links li a.active {
+    color: #fff;
+    background: var(--accent-gradient);
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+    transform: translateX(5px);
+}
+
+/* Tombol Hamburger (Disembunyikan di desktop, muncul di mobile) */
+.menu-toggle {
+    display: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1001;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    box-shadow: var(--shadow-soft);
+    backdrop-filter: blur(10px);
+}
+
+.menu-toggle i {
+    font-size: 1.5rem;
+    color: var(--accent);
+}
+
+/* Pembungkus tombol Switch Tema */
+.theme-switch-wrapper {
+    margin-top: auto; /* Mendorong tombol ke bagian paling bawah sidebar */
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.theme-toggle {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-main);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-soft);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.theme-toggle:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+    color: var(--accent);
+}
+
+/* --- 5. MAIN CONTENT AREA --- */
+.main-content {
+    margin-left: var(--sidebar-width); /* Memberi ruang agar tidak tertutup sidebar */
+    padding: 0;
+    transition: margin-left 0.4s ease;
+}
+
+/* Pengaturan umum untuk setiap section/halaman */
+section {
+    padding: 100px 5% 80px 5%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+    font-weight: 700;
+    position: relative;
+}
+
+/* Garis bawah pada judul section */
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 5px;
+    background: var(--accent-gradient);
+    margin-top: 15px;
+    border-radius: 3px;
+}
+
+/* --- HERO SECTION --- */
+.hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 50px;
+}
+
+.hero-text h3 {
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.hero-text h1 {
+    font-size: 4rem;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+
+.hero-text .typing-container {
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    margin-bottom: 30px;
+    height: 40px;
+    font-weight: 500;
+}
+
+.typing-text {
+    color: var(--accent);
+    font-weight: 600;
+    border-right: 2px solid var(--accent); /* Kursor berkedip */
+    padding-right: 5px;
+    animation: blink 0.7s infinite;
+}
+
+@keyframes blink { 50% { border-color: transparent; } }
+
+.hero-text p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 40px;
+    max-width: 90%;
+}
+
+/* Pengaturan Tombol (Button) */
+.cta-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.btn {
+    padding: 14px 35px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-primary {
+    background: var(--accent-gradient);
+    color: #fff;
+    border: none;
+    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 25px rgba(37, 99, 235, 0.4);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--accent);
+    border: 2px solid var(--accent);
+}
+
+.btn-secondary:hover {
+    background: rgba(37, 99, 235, 0.05);
+    transform: translateY(-3px);
+}
+
+.hero-visual {
+    position: relative;
+}
+
+.glass-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 40px;
+    backdrop-filter: blur(20px);
+    box-shadow: var(--shadow-soft);
+    position: relative;
+    z-index: 2;
+}
+
+.glass-card img {
+    width: 100%;
+    border-radius: 15px;
+    object-fit: cover;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* --- PORTFOLIO SECTION --- */
+.portfolio-grid {
+    display: grid;
+    /* Grid dinamis: otomatis menyesuaikan layar, minimal lebar 300px per kolom */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.portfolio-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    transition: all 0.4s ease;
+    backdrop-filter: blur(10px);
+}
+
+.portfolio-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--accent-light);
+}
+
+.portfolio-img {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    position: relative;
+}
+
+.portfolio-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+/* Efek zoom-in pada gambar saat kartu di-hover */
+.portfolio-card:hover .portfolio-img img {
+    transform: scale(1.1);
+}
+
+.portfolio-content {
+    padding: 25px;
+}
+
+.tag {
+    display: inline-block;
+    padding: 5px 12px;
+    background: rgba(37, 99, 235, 0.1);
+    color: var(--accent);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.portfolio-content h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: var(--text-main);
+}
+
+.portfolio-content p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.portfolio-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: gap 0.3s;
+}
+
+.portfolio-card:hover .portfolio-link {
+    gap: 10px; /* Panah bergerak ke kanan saat hover */
+}
+
+/* --- EXPERTISE SECTION --- */
+.skills-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.skill-card {
+    background: var(--glass-bg);
+    padding: 35px 30px;
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s;
+    box-shadow: var(--shadow-soft);
+}
+
+.skill-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--accent-light);
+    box-shadow: var(--shadow-hover);
+    background: var(--card-hover-bg);
+}
+
+.skill-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(56, 189, 248, 0.1));
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.skill-card i {
+    font-size: 2rem;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.skill-card h4 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: var(--text-main);
+}
+
+.skill-card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* --- CONTACT & FOOTER --- */
+.contact {
+    background: var(--contact-bg);
+    text-align: center;
+    padding-bottom: 50px;
+}
+
+.contact .section-title::after {
+    margin: 15px auto 0;
+}
+
+.contact-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 50px;
+    border-radius: 20px;
+    max-width: 700px;
+    margin: 0 auto;
+    box-shadow: var(--shadow-soft);
+    backdrop-filter: blur(10px);
+}
+
+.social-icons {
+    margin-top: 35px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.social-icons a {
+    color: var(--accent);
+    font-size: 1.5rem;
+    width: 55px;
+    height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--icon-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    transition: all 0.3s;
+    text-decoration: none;
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.1);
+}
+
+.social-icons a:hover {
+    background: var(--accent-gradient);
+    color: #fff;
+    transform: translateY(-5px);
+    border-color: transparent;
+    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    background: var(--footer-bg);
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-left: var(--sidebar-width);
+    transition: margin-left 0.4s ease;
+    border-top: 1px solid var(--glass-border);
+}
+
+/* --- 6. RESPONSIVE DESIGN (MEDIA QUERIES) --- */
+
+/* Untuk layar tablet / laptop kecil (dibawah 992px) */
+@media (max-width: 992px) {
+    .hero {
+        grid-template-columns: 1fr; /* Mengubah 2 kolom menjadi 1 kolom (atas-bawah) */
+        text-align: center;
+        margin-top: 50px;
+    }
+    .hero-text h1 { font-size: 3rem; }
+    .hero-text p { margin: 0 auto 40px auto; }
+    .cta-buttons { justify-content: center; }
+    .section-title::after { margin: 15px auto 0; }
+    .section-title { text-align: center; }
+}
+
+/* Untuk layar Handphone (dibawah 768px) */
+@media (max-width: 768px) {
+    :root {
+        --sidebar-width: 0px; /* Sidebar dihilangkan dari perhitungan lebar */
+    }
+    
+    .sidebar {
+        transform: translateX(-100%); /* Menyembunyikan sidebar ke kiri luar layar */
+        width: 280px;
+    }
+    
+    /* Class .active ditambahkan oleh JavaScript saat tombol menu diklik */
+    .sidebar.active {
+        transform: translateX(0); /* Menampilkan sidebar */
+    }
+    
+    .menu-toggle {
+        display: flex; /* Menampilkan tombol hamburger */
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .main-content {
+        margin-left: 0; /* Konten menggunakan lebar penuh */
+    }
+    
+    footer {
+        margin-left: 0;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        padding: 0 20px;
+    }
+}
