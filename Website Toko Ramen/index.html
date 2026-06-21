@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramen Yozora - Cita Rasa Sinematik</title>
+    <style>
+        /* CSS Reset & Variabel Global */
+        :root {
+            --primary: #d94f27; /* Warna oranye hangat khas kuah ramen */
+            --dark: #121212;
+            --darker: #0a0a0a;
+            --light: #fef1e6;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* 1. Kursor Interaktif */
+        .cursor-glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(217,79,39,0.08) 0%, rgba(0,0,0,0) 60%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            transition: top 0.1s ease-out, left 0.1s ease-out;
+        }
+
+        /* 2. Navigasi (Header) */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.4s ease;
+        }
+
+        header.scrolled {
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 15px 5%;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--light);
+            text-decoration: none;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-links li a {
+            color: #d1d1d1;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links li a:hover {
+            color: var(--light);
+        }
+
+        .nav-links li a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 6px;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 30px;
+            height: 3px;
+            background: var(--light);
+            transition: all 0.3s ease;
+            border-radius: 3px;
+        }
+
+        /* 3. Hero Section */
+        #hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(rgba(18, 18, 18, 0.7), rgba(10, 10, 10, 0.95)), 
+                        url('https://images.unsplash.com/photo-1552611052-33e04de081de?q=80&w=1964&auto=format&fit=crop') center/cover no-repeat fixed;
+            overflow: hidden;
+        }
+
+        #particles {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            z-index: 2;
+            transform: translateY(50px);
+            opacity: 0;
+            animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            padding: 0 20px;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(3rem, 5vw, 6rem);
+            letter-spacing: 3px;
+            text-shadow: 0 0 30px rgba(217, 79, 39, 0.6);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: #d1d1d1;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            margin-inline: auto;
+        }
+
+        .btn {
+            padding: 15px 45px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--light);
+            background: transparent;
+            border: 2px solid var(--primary);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: var(--primary);
+            box-shadow: 0 0 25px rgba(217, 79, 39, 0.5);
+            transform: translateY(-3px);
+            color: #fff;
+        }
+
+        /* 4. Bagian Global / Sections */
+        section {
+            padding: 120px 5%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            position: relative;
+            letter-spacing: 2px;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            display: block;
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        /* 5. Menu Section */
+        #menu { background: var(--darker); }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .menu-card {
+            background: #1a1a1a;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease;
+            position: relative;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .menu-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(217, 79, 39, 0.2);
+        }
+
+        .img-container {
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+        }
+
+        .menu-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .menu-card:hover .menu-img {
+            transform: scale(1.15) rotate(2deg);
+        }
+
+        .menu-info {
+            padding: 30px;
+            background: linear-gradient(to top, #1a1a1a 80%, transparent);
+            position: relative;
+            z-index: 2;
+        }
+
+        .menu-info h3 { margin-bottom: 12px; font-size: 1.6rem; color: var(--light); }
+        .menu-info p { color: #999; font-size: 1rem; line-height: 1.6; }
+        
+        .price {
+            display: inline-block;
+            margin-top: 20px;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+        }
+
+        /* 6. Tentang Kami Section */
+        #about { background: var(--dark); }
+        
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-text p {
+            color: #b0b0b0;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.8s ease;
+        }
+
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+
+        /* 7. Reservasi Section & Custom Modal */
+        #reservation { background: var(--darker); }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #1a1a1a;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #d1d1d1;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            background: #121212;
+            border: 1px solid #333;
+            border-radius: 10px;
+            color: var(--light);
+            font-size: 1rem;
+            font-family: var(--font-main);
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(217, 79, 39, 0.2);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-row .form-group { flex: 1; }
+
+        /* Custom Modal Alert Style */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-box {
+            background: #1a1a1a;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid var(--primary);
+            transform: translateY(20px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            max-width: 90%;
+            width: 400px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 30px rgba(217, 79, 39, 0.1);
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-box h3 { color: var(--primary); margin-bottom: 15px; font-size: 1.8rem; }
+        .modal-box p { color: #d1d1d1; margin-bottom: 30px; font-size: 1.1rem; line-height: 1.5; }
+
+        /* Keyframes Animasi */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsivitas */
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.5rem; }
+            .cursor-glow { display: none; }
+            
+            /* Mobile Nav */
+            .hamburger { display: flex; }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: rgba(10, 10, 10, 0.98);
+                backdrop-filter: blur(15px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.4s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+                gap: 40px;
+            }
+
+            .nav-links.active {
+                right: 0;
+                box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+            }
+
+            /* Hamburger Animation */
+            .hamburger.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+            .hamburger.active span:nth-child(2) { opacity: 0; }
+            .hamburger.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+            .form-container { padding: 30px 20px; }
+            .form-row { flex-direction: column; gap: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Pelacak Kursor Glow -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <!-- Navigation Bar -->
+    <header id="header">
+        <a href="#" class="logo">Yozo<span>ra.</span></a>
+        <nav>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#menu" class="nav-item">Menu Utama</a></li>
+                <li><a href="#about" class="nav-item">Tentang Kami</a></li>
+                <li><a href="#reservation" class="nav-item">Reservasi Meja</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <section id="hero">
+        <canvas id="particles"></canvas>
+        <div class="hero-content">
+            <h1>Ramen Yozora</h1>
+            <p>Kehangatan mangkuk di bawah langit malam. Cita rasa otentik yang diracik dengan presisi, disajikan dalam harmoni visual yang memanjakan.</p>
+            <a href="#menu" class="btn">Jelajahi Menu</a>
+        </div>
+    </section>
+
+    <section id="menu">
+        <h2 class="section-title">Menu Utama</h2>
+        <div class="menu-grid">
+            
+            <div class="menu-card">
+                <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1557872943-16a5ac26437e?q=80&w=2031&auto=format&fit=crop" class="menu-img" alt="Kuro Tonkotsu">
+                </div>
+                <div class="menu-info">
+                    <h3>Kuro Tonkotsu</h3>
+                    <p>Kaldu direbus perlahan selama 16 jam, dipadukan dengan minyak bawang hitam pekat, chashu bakar yang lembut, dan tamago meleleh.</p>
+                    <span class="price">Rp 65.000</span>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=2000&auto=format&fit=crop" class="menu-img" alt="Aka Miso Fire">
+                </div>
+                <div class="menu-info">
+                    <h3>Aka Miso Fire</h3>
+                    <p>Harmoni miso merah artisanal dan racikan cabai rahasia, memberikan tendangan pedas yang progresif tanpa menghilangkan rasa gurih kaldu.</p>
+                    <span class="price">Rp 58.000</span>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1591814468924-caf88d1232e1?q=80&w=2070&auto=format&fit=crop" class="menu-img" alt="Classic Shoyu">
+                </div>
+                <div class="menu-info">
+                    <h3>Golden Shoyu</h3>
+                    <p>Pendekatan minimalis namun kompleks. Kaldu ayam bening berlapis kecap kedelai fermentasi, rumput laut renyah, dan irisan rebung manis.</p>
+                    <span class="price">Rp 50.000</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="about">
+        <h2 class="section-title">Tentang Kami</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>Berdiri sejak tahun 2018 di sudut kota yang sunyi, <strong>Yozora</strong> yang berarti "Langit Malam" lahir dari filosofi sederhana: memberikan secercah kehangatan bagi jiwa-jiwa yang lelah setelah seharian beraktivitas.</p>
+                <p>Setiap mangkuk ramen kami bukanlah sekadar makanan, melainkan sebuah karya seni. Chef kami menghabiskan waktu bertahun-tahun di Kyoto untuk menyempurnakan teknik merebus kaldu, menciptakan harmoni rasa umami yang tak terlupakan.</p>
+                <p>Kami hanya menggunakan bahan-bahan lokal terbaik yang dipadukan dengan bumbu otentik impor langsung dari Jepang. Datanglah, dan nikmati ketenangan malam di bawah atap Yozora.</p>
+            </div>
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1552611052-d59a0d9741bc?q=80&w=2000&auto=format&fit=crop" alt="Suasana Dapur Yozora">
+            </div>
+        </div>
+    </section>
+
+    <section id="reservation">
+        <h2 class="section-title">Reservasi Meja</h2>
+        <div class="form-container">
+            <form id="reservationForm" onsubmit="handleReservation(event)">
+                <div class="form-group">
+                    <label for="name">Nama Lengkap</label>
+                    <input type="text" id="name" class="form-control" placeholder="Masukkan nama Anda" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="date">Tanggal</label>
+                        <input type="date" id="date" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="time">Waktu</label>
+                        <input type="time" id="time" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="guests">Jumlah Tamu</label>
+                        <select id="guests" class="form-control" required>
+                            <option value="1">1 Orang</option>
+                            <option value="2">2 Orang</option>
+                            <option value="3">3 Orang</option>
+                            <option value="4">4 Orang</option>
+                            <option value="5+">5+ Orang</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">No. Telepon</label>
+                        <input type="tel" id="phone" class="form-control" placeholder="0812-xxxx-xxxx" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Catatan Khusus (Opsional)</label>
+                    <textarea id="notes" class="form-control" rows="3" placeholder="Alergi, permintaan tempat duduk..."></textarea>
+                </div>
+
+                <button type="submit" class="btn" style="width: 100%;">Konfirmasi Reservasi</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Custom Modal Message Box -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-box">
+            <h3>Reservasi Berhasil!</h3>
+            <p>Terima kasih. Permintaan reservasi meja Anda telah kami terima dan akan segera kami proses.</p>
+            <button class="btn" onclick="closeModal()">Tutup</button>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. Logika Navigasi & Hamburger Menu ---
+        const header = document.getElementById('header');
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        const navItems = document.querySelectorAll('.nav-item');
+
+        // Ganti gaya header saat di-scroll (Glassmorphism effect)
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Toggle menu mobile
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        // Tutup menu mobile setelah link diklik
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            });
+        });
+
+        // --- 2. Logika Modal Message Box (Pengganti Alert) ---
+        function handleReservation(event) {
+            event.preventDefault(); // Mencegah reload halaman
+            document.getElementById('successModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('successModal').classList.remove('active');
+            document.getElementById('reservationForm').reset(); // Mengosongkan form
+        }
+
+        // --- 3. Logika Dynamic Cursor Glow ---
+        const glow = document.getElementById('cursorGlow');
+        document.addEventListener('mousemove', (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+
+        // --- 4. Logika Particle System (Efek Uap Panas) ---
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+
+        let particlesArray = [];
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1; 
+                this.speedY = Math.random() * -1.5 - 0.5; 
+                this.speedX = Math.random() * 1 - 0.5; 
+                this.opacity = Math.random() * 0.5 + 0.1;
+            }
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
+                if (this.y < 0) {
+                    this.y = canvas.height;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+            draw() {
+                ctx.fillStyle = `rgba(255, 180, 100, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.width * canvas.height) / 10000; 
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        initParticles();
+        animateParticles();
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            initParticles();
+        });
+    </script>
+</body>
+</html>
