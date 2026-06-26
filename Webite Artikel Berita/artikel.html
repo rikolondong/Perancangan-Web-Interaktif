@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masa Depan Software-Defined Networking (SDN) - Warta Aktual</title>
+    <style>
+        /* Variabel CSS (Sama dengan Halaman Utama untuk Konsistensi) */
+        :root {
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+            --card-bg: #ffffff;
+            --accent-color: #2563eb;
+            --border-color: #e5e7eb;
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --card-bg: #1e1e1e;
+            --accent-color: #60a5fa;
+            --border-color: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
+            line-height: 1.8;
+        }
+
+        /* Navigasi */
+        header {
+            background-color: var(--card-bg);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 2px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: var(--text-color);
+            cursor: pointer;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        /* Tata Letak Konten (Main + Sidebar) */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 5%;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        /* Bagian Artikel */
+        .main-content {
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .breadcrumb {
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .article-header h1 {
+            font-size: 2.5rem;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+
+        .meta-info {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 15px;
+        }
+
+        [data-theme="dark"] .meta-info {
+            color: #aaa;
+        }
+
+        .featured-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .article-body p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            text-align: justify;
+        }
+
+        .article-body h2 {
+            margin: 2rem 0 1rem;
+            font-size: 1.6rem;
+            color: var(--text-color);
+        }
+
+        blockquote {
+            border-left: 4px solid var(--accent-color);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: #555;
+            font-size: 1.2rem;
+        }
+
+        [data-theme="dark"] blockquote {
+            color: #bbb;
+        }
+
+        /* Fitur Interaktif: Tombol Like */
+        .interaction-bar {
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            margin: 2rem 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .like-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: var(--text-color);
+            cursor: pointer;
+            font-weight: bold;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .like-btn.liked {
+            background-color: #ef4444;
+            color: white;
+            border-color: #ef4444;
+        }
+
+        /* Kolom Komentar Dinamis */
+        .comment-section {
+            margin-top: 3rem;
+        }
+
+        .comment-section h3 {
+            margin-bottom: 1.5rem;
+        }
+
+        .comment-form textarea {
+            width: 100%;
+            height: 100px;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            resize: none;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .comment-form button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+
+        .comment-form button:hover {
+            opacity: 0.9;
+        }
+
+        .comments-list {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .comment-item {
+            background-color: var(--bg-color);
+            padding: 1.2rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .comment-user {
+            font-weight: bold;
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
+            color: var(--accent-color);
+        }
+
+        .comment-text {
+            font-size: 1rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .sidebar-widget {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .sidebar-widget h3 {
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .related-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .related-list a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .related-list a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            margin-top: 4rem;
+        }
+
+        /* Responsivitas */
+        @media (max-width: 968px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .article-header h1 {
+                font-size: 2rem;
+            }
+            .featured-image {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">Warta Aktual</a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="#">Terbaru</a></li>
+                <li><a href="#">Populer</a></li>
+            </ul>
+        </nav>
+        <button class="theme-toggle" id="themeToggle">🌙 Mode Gelap</button>
+    </header>
+
+    <div class="container">
+        <main class="main-content">
+            <div class="breadcrumb">Teknologi &bull; Struktur Jaringan</div>
+            
+            <div class="article-header">
+                <h1>Masa Depan Software-Defined Networking (SDN) dalam Virtualisasi Jaringan Skala Besar</h1>
+                <div class="meta-info">
+                    <span>Oleh: <strong>Redaksi Tekno</strong></span>
+                    <span>Jumat, 22 Juni 2026</span>
+                    <span>Dilihat: 1,240 kali</span>
+                </div>
+            </div>
+
+            <img src="https://images.unsplash.com/photo-1551739440-5dd934d3a94a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Networking" class="featured-image">
+
+            <div class="article-body">
+                <p>Perkembangan infrastruktur digital menuntut pengelolaan jaringan yang jauh lebih adaptif dan efisien. Metode konvensional yang mengandalkan konfigurasi manual pada setiap perangkat keras mulai menemui titik jenuh, terutama ketika dihadapkan pada arsitektur pusat data modern dan kebutuhan komputasi awan yang masif.</p>
+                
+                <p>Sebagai solusinya, teknologi <strong>Software-Defined Networking (SDN)</strong> hadir membawa paradigma baru dengan memisahkan antara <em>control plane</em> (pusat kendali logika sistem) dan <em>data plane</em> (perangkat penerusan data). Pemisahan ini memungkinkan administrator jaringan melakukan pengaturan parameter, optimasi jalur data, dan penerapan kebijakan keamanan secara terpusat melalui perangkat lunak.</p>
+
+                <blockquote>
+                    "Penerapan arsitektur pengendali terdistribusi (multi-controller) terbukti secara signifikan memangkas latensi end-to-end sekaligus menghilangkan risiko single point of failure pada infrastruktur kritis."
+                </blockquote>
+
+                <h2>Analisis Performa Multi-Controller</h2>
+                <p>Dalam pengujian terbaru pada lingkungan jaringan tersimulasi berskala besar, penggunaan satu kontroler tunggal sering kali memicu hambatan performa (bottleneck) saat beban lalu lintas data melonjak tinggi. Guna mengatasi limitasi tersebut, penerapan konfigurasi klaster multi-controller kini menjadi standar baru yang wajib dipertimbangkan.</p>
+                
+                <p>Dengan membagi beban kerja secara dinamis antar-kontroler, sistem tidak hanya mampu menjaga kestabilan waktu respons transmisi paket data (delay), tetapi juga memberikan tingkat ketersediaan layanan yang jauh lebih tinggi apabila salah satu node mengalami gangguan mendadak.</p>
+            </div>
+
+            <div class="interaction-bar">
+                <button class="like-btn" id="likeBtn">❤️ <span id="likeCount">42</span> Suka</button>
+            </div>
+
+            <div class="comment-section">
+                <h3>Komentar ( <span id="commentCount">2</span> )</h3>
+                <div class="comment-form">
+                    <textarea id="commentInput" placeholder="Tulis komentar atau opini Anda mengenai artikel ini..."></textarea>
+                    <button id="submitComment">Kirim Komentar</button>
+                </div>
+
+                <div class="comments-list" id="commentsList">
+                    <div class="comment-item">
+                        <div class="comment-user">Rian H.</div>
+                        <div class="comment-text">Analisis yang sangat mendalam. Pendekatan multi-controller memang krusial untuk mitigasi beban kerja di era data raksasa seperti sekarang. Terima kasih informasinya!</div>
+                    </div>
+                    <div class="comment-item">
+                        <div class="comment-user">Siti Aminah</div>
+                        <div class="comment-text">Sangat membantu untuk referensi riset sistem jaringan saya semester ini. Ditunggu bahasan simulasi konkritnya menggunakan tools seperti Mininet!</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <aside class="sidebar">
+            <div class="sidebar-widget">
+                <h3>Artikel Terkait</h3>
+                <ul class="related-list">
+                    <li><a href="#">&bull; Tren Desain Web Interaktif Tanpa Framework</a></li>
+                    <li><a href="#">&bull; Tips Sinematografi Drone untuk Pendaki Solo</a></li>
+                    <li><a href="#">&bull; Memanfaatkan Power BI untuk Visualisasi Data Kampus</a></li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-widget">
+                <h3>Kategori Populer</h3>
+                <ul class="related-list">
+                    <li><a href="#">Teknologi (14)</a></li>
+                    <li><a href="#">Edukasi (8)</a></li>
+                    <li><a href="#">Hobi & Alam (5)</a></li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Warta Aktual. Portal Berita Interaktif.</p>
+    </footer>
+
+    <script>
+        // --- FITUR DARK MODE ---
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                themeToggle.textContent = '🌙 Mode Gelap';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeToggle.textContent = '☀️ Mode Terang';
+            }
+        });
+
+        // --- INTERAKTIF: TOMBOL LIKE ---
+        const likeBtn = document.getElementById('likeBtn');
+        const likeCount = document.getElementById('likeCount');
+        let count = parseInt(likeCount.textContent);
+        let isLiked = false;
+
+        likeBtn.addEventListener('click', () => {
+            if(!isLiked) {
+                count++;
+                likeBtn.classList.add('liked');
+                isLiked = true;
+            } else {
+                count--;
+                likeBtn.classList.remove('liked');
+                isLiked = false;
+            }
+            likeCount.textContent = count;
+        });
+
+        // --- INTERAKTIF: TAMBAH KOMENTAR DINAMIS ---
+        const commentInput = document.getElementById('commentInput');
+        const submitComment = document.getElementById('submitComment');
+        const commentsList = document.getElementById('commentsList');
+        const commentCount = document.getElementById('commentCount');
+        let totalComments = parseInt(commentCount.textContent);
+
+        submitComment.addEventListener('click', () => {
+            const text = commentInput.value.trim();
+            if (text === "") {
+                alert("Komentar tidak boleh kosong!");
+                return;
+            }
+
+            // Membuat element komentar baru secara dinamis
+            const newItem = document.createElement('div');
+            newItem.classList.add('comment-item');
+            newItem.innerHTML = `
+                <div class="comment-user">Pembaca Setia</div>
+                <div class="comment-text">${text}</div>
+            `;
+
+            // Menyisipkan di baris paling atas daftar komentar
+            commentsList.insertBefore(newItem, commentsList.firstChild);
+            
+            // Mengosongkan kolom input & mengupdate jumlah komentar
+            commentInput.value = "";
+            totalComments++;
+            commentCount.textContent = totalComments;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beranda - Perusahaan Masa Depan</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --text-dark: #1f2937;
+            --text-light: #f3f4f6;
+            --text-muted: #6b7280;
+            --bg-light: #ffffff;
+            --bg-gray: #f9fafb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-gray);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        header {
+            background: var(--bg-light);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: 0.3s;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--text-dark);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-links li a:hover, .nav-links li a.active {
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            /* Background gambar dengan gradient overlay */
+            background: linear-gradient(rgba(37, 99, 235, 0.8), rgba(30, 64, 175, 0.9)), url('https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            color: var(--text-light);
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease-out;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            background: var(--bg-light);
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: 0.3s;
+            display: inline-block;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            background: var(--text-dark);
+            color: var(--text-light);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+
+        /* General Container & Sections */
+        .section-padding {
+            padding: 80px 5%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.2rem;
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+        
+        .section-title span {
+            color: var(--primary-color);
+        }
+
+        /* Grid System */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        /* Cards Umum */
+        .card {
+            background: var(--bg-light);
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            transition: 0.3s;
+            text-align: center;
+            border: 1px solid #f3f4f6;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            border-color: var(--primary-color);
+        }
+
+        .card h3 {
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+            font-size: 1.3rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Portofolio Section */
+        .bg-gray-section {
+            background-color: var(--bg-light);
+        }
+
+        .portfolio-card {
+            background: var(--bg-light);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .portfolio-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .portfolio-content {
+            padding: 25px;
+            text-align: left;
+        }
+
+        .portfolio-category {
+            color: var(--primary-color);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        /* Testimoni Section */
+        .testimonial-card {
+            background: var(--bg-light);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: left;
+            position: relative;
+        }
+
+        .quote-icon {
+            color: #d1d5db;
+            font-size: 3rem;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            opacity: 0.3;
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-info img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 2px solid var(--primary-color);
+        }
+
+        .user-details h4 {
+            font-size: 1rem;
+            color: var(--text-dark);
+        }
+
+        .user-details p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Klien Kami Section */
+        .client-section {
+            border-top: 1px solid #e5e7eb;
+            background: var(--bg-light);
+            padding: 50px 5%;
+        }
+
+        .client-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        .client-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #d1d5db;
+            transition: 0.3s;
+            cursor: pointer;
+            letter-spacing: 1px;
+        }
+
+        .client-logo:hover {
+            color: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        /* Footer Utama (BARU) */
+        .main-footer {
+            background: #111827; /* Warna gelap elegan */
+            color: var(--text-light);
+            padding: 70px 5% 20px;
+            font-size: 0.95rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-col h4 {
+            color: #ffffff;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-col h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .footer-logo span {
+            color: #ffffff;
+        }
+
+        .footer-col p {
+            color: #9ca3af;
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul li a {
+            color: #9ca3af;
+            text-decoration: none;
+            transition: 0.3s;
+            display: inline-block;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--primary-color);
+            transform: translateX(5px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background: #1f2937;
+            border-radius: 50%;
+            color: #ffffff;
+            text-decoration: none;
+            transition: 0.3s;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .social-links a:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 25px;
+            border-top: 1px solid #374151;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsif untuk HP */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* Idealnya diganti hamburger menu untuk versi mobile */
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .client-grid {
+                gap: 30px;
+            }
+            .client-logo {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigasi -->
+    <header id="main-header">
+        <nav>
+            <a href="index.html" class="logo">
+                <!-- Ikon Logo SVG Abstrak -->
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                Bisnis<span>Pro</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Beranda</a></li>
+                <li><a href="tentang-kami.html">Tentang Kami</a></li>
+                <li><a href="lokasi.html">Lokasi</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Elevasi <span>Bisnis</span> Anda</h1>
+            <p>Kami memadukan strategi kreatif dan teknologi mutakhir untuk mendorong pertumbuhan perusahaan dan UMKM Anda ke level selanjutnya.</p>
+            <br>
+            <a href="#layanan" class="btn">Pelajari Layanan Kami</a>
+        </div>
+    </section>
+
+    <!-- Layanan Section -->
+    <section id="layanan" class="section-padding bg-gray-section">
+        <div class="container">
+            <h2 class="section-title">Produk & <span>Layanan Kami</span></h2>
+            <div class="grid-3">
+                <div class="card">
+                    <h3>Pengembangan Digital</h3>
+                    <p>Membangun identitas digital yang kuat melalui desain website responsif, aplikasi mobile, dan strategi optimasi SEO yang terukur.</p>
+                </div>
+                <div class="card">
+                    <h3>Konsultasi Bisnis</h3>
+                    <p>Pendampingan ahli untuk memetakan alur kerja yang efisien, manajemen risiko, dan merancang strategi pertumbuhan jangka panjang.</p>
+                </div>
+                <div class="card">
+                    <h3>Layanan Kreatif</h3>
+                    <p>Produksi aset visual berkualitas tinggi, mulai dari desain UI/UX, video promosi profesional, hingga manajemen sosial media.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portofolio Section (BARU) -->
+    <section class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Karya <span>Terbaik Kami</span></h2>
+            <div class="grid-3">
+                <!-- Portofolio 1 -->
+                <div class="portfolio-card">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Website E-Commerce" class="portfolio-img">
+                    <div class="portfolio-content">
+                        <span class="portfolio-category">Web Development</span>
+                        <h3 style="margin: 5px 0 10px; font-size: 1.2rem; color: #1f2937;">Sistem E-Commerce B2B</h3>
+                        <p style="color: #6b7280; font-size: 0.9rem;">Membangun platform penjualan grosir online dengan integrasi sistem inventaris otomatis.</p>
+                    </div>
+                </div>
+                <!-- Portofolio 2 -->
+                <div class="portfolio-card">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Analisa Data" class="portfolio-img">
+                    <div class="portfolio-content">
+                        <span class="portfolio-category">Konsultasi IT</span>
+                        <h3 style="margin: 5px 0 10px; font-size: 1.2rem; color: #1f2937;">Dashboard Analitik Data</h3>
+                        <p style="color: #6b7280; font-size: 0.9rem;">Pembuatan dashboard real-time untuk memantau performa penjualan ritel nasional.</p>
+                    </div>
+                </div>
+                <!-- Portofolio 3 -->
+                <div class="portfolio-card">
+                    <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Branding" class="portfolio-img">
+                    <div class="portfolio-content">
+                        <span class="portfolio-category">Branding & Desain</span>
+                        <h3 style="margin: 5px 0 10px; font-size: 1.2rem; color: #1f2937;">Re-branding Startup Edukasi</h3>
+                        <p style="color: #6b7280; font-size: 0.9rem;">Pembaruan identitas visual menyeluruh untuk meningkatkan daya tarik pada demografi milenial.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimoni Pelanggan Section (BARU) -->
+    <section class="section-padding bg-gray-section">
+        <div class="container">
+            <h2 class="section-title">Apa Kata <span>Klien Kami</span></h2>
+            <div class="grid-3">
+                <!-- Testimoni 1 -->
+                <div class="testimonial-card">
+                    <span class="quote-icon">"</span>
+                    <p class="testimonial-text">"Website kami mengalami peningkatan trafik hingga 300% setelah di-rebuild oleh tim BisnisPro. Sangat profesional dan tepat waktu!"</p>
+                    <div class="user-info">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Budi Santoso">
+                        <div class="user-details">
+                            <h4>Siti Aminah</h4>
+                            <p>CEO, RetailNusa</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimoni 2 -->
+                <div class="testimonial-card">
+                    <span class="quote-icon">"</span>
+                    <p class="testimonial-text">"Sesi konsultasi yang diberikan benar-benar membuka mata kami terhadap potensi pasar digital. Layanan purna jualnya juga luar biasa."</p>
+                    <div class="user-info">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Andi Wijaya">
+                        <div class="user-details">
+                            <h4>Andi Wijaya</h4>
+                            <p>Founder, KopiKultur</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimoni 3 -->
+                <div class="testimonial-card">
+                    <span class="quote-icon">"</span>
+                    <p class="testimonial-text">"Hasil video promosi yang dibuat sangat elegan dan sukses meningkatkan brand awareness produk terbaru kami di sosial media."</p>
+                    <div class="user-info">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Rina Melati">
+                        <div class="user-details">
+                            <h4>Rina Melati</h4>
+                            <p>Direktur Marketing, TechIndo</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Klien Kami Section (BARU) -->
+    <section class="client-section">
+        <div class="container" style="text-align: center;">
+            <p style="color: var(--text-muted); margin-bottom: 20px; font-weight: 600;">DIPERCAYA OLEH PERUSAHAAN INOVATIF</p>
+            <div class="client-grid">
+                <!-- Menggunakan teks sebagai ilustrasi logo klien -->
+                <div class="client-logo">TECH.ID</div>
+                <div class="client-logo">NusaBank</div>
+                <div class="client-logo">GlobalEdu</div>
+                <div class="client-logo">MajuJaya</div>
+                <div class="client-logo">KreatifLab</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Utama -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <!-- Kolom 1: Logo & Deskripsi -->
+            <div class="footer-col">
+                <a href="index.html" class="footer-logo">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    Bisnis<span>Pro</span>
+                </a>
+                <p>Mitra strategis Anda dalam menghadapi tantangan bisnis modern. Kami mengedepankan inovasi, kualitas, dan hasil yang berdampak nyata.</p>
+                <div class="social-links">
+                    <a href="#" title="Facebook">FB</a>
+                    <a href="#" title="Instagram">IG</a>
+                    <a href="#" title="LinkedIn">LI</a>
+                    <a href="#" title="YouTube">YT</a>
+                </div>
+            </div>
+
+            <!-- Kolom 2: Tautan Cepat -->
+            <div class="footer-col">
+                <h4>Tautan Cepat</h4>
+                <ul>
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="#layanan">Layanan Kami</a></li>
+                    <li><a href="tentang-kami.html">Tentang Kami</a></li>
+                    <li><a href="lokasi.html">Lokasi & Kontak</a></li>
+                </ul>
+            </div>
+
+            <!-- Kolom 3: Info Kontak -->
+            <div class="footer-col">
+                <h4>Hubungi Kami</h4>
+                <p><strong>Email:</strong><br> halo@bisnispro.co.id</p>
+                <p><strong>Telepon:</strong><br> +62 812 3456 7890</p>
+                <p><strong>Alamat:</strong><br> Jl. Inspeksi Kalimalang, Cikarang, Jawa Barat, Indonesia</p>
+            </div>
+        </div>
+        
+        <!-- Bagian Copyright Bawah -->
+        <div class="footer-bottom">
+            <p>&copy; 2026 BisnisPro. Hak Cipta Dilindungi.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Interaktif -->
+    <script>
+        // Mengubah tampilan navbar saat di-scroll
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 50) {
+                header.style.padding = '12px 0';
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.padding = '20px 0';
+                header.style.background = '#ffffff';
+                header.style.backdropFilter = 'none';
+            }
+        });
+
+        // Efek smooth scroll untuk link dengan anchor (#)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
