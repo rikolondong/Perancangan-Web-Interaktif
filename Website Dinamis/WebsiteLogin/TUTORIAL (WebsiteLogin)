@@ -47,14 +47,14 @@ Langkah 1: Persiapan Folder di XAMPP
 
     Masuk ke dalam folder htdocs.
 
-    Buat sebuah folder baru di dalam htdocs dengan nama website-test.
+    Buat sebuah folder baru di dalam htdocs dengan nama WebsiteLogin.
 
 Langkah 2: Menyalin File Project
 
-Letakkan seluruh file kode PHP ke dalam folder C:\xampp\htdocs\website-test\. Pastikan struktur filenya adalah sebagai berikut:
+Letakkan seluruh file kode PHP ke dalam folder C:\xampp\htdocs\WebsiteLogin\. Pastikan struktur filenya adalah sebagai berikut:
 Plaintext
 
-website-test/
+WebsiteLogin/
 ├── config.php        # Konfigurasi koneksi database MySQL
 ├── login.php         # Tampilan & logika validasi masuk akun
 ├── register.php      # Tampilan & logika pendaftaran akun baru
@@ -82,7 +82,7 @@ Langkah 4: Menjalankan Aplikasi
     Akses halaman login melalui tautan berikut:
     Plaintext
 
-    http://localhost/website-test/login.php
+    http://localhost/WebsiteLogin/login.php
 
     Selamat! Website uji coba siap digunakan. Anda bisa menekan opsi Sign up terlebih dahulu untuk membuat akun baru, lalu mencoba masuk menggunakan akun tersebut untuk mengakses Dashboard.
 
