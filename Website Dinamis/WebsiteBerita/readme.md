@@ -28,12 +28,12 @@ Ikuti langkah-langkah di bawah ini secara berurutan untuk menjalankan proyek ini
 2. Pilih **Download ZIP**.
 3. Tunggu hingga proses unduhan selesai.
 4. Buka folder *Downloads* di komputer Anda, klik kanan pada file ZIP tersebut, lalu pilih **Extract All...** (atau Ekstrak di sini).
-5. Ubah nama folder hasil ekstraksi menjadi **`portal-berita`**.
+5. Ubah nama folder hasil ekstraksi menjadi **`WebsiteBerita`**.
 
 ### Langkah 2: Pindahkan ke Folder XAMPP
-1. *Copy* (salin) atau *Cut* (potong) folder **`portal-berita`** tersebut.
+1. *Copy* (salin) atau *Cut* (potong) folder **`WebsiteBerita`** tersebut.
 2. Buka *File Explorer* dan navigasikan ke direktori instalasi XAMPP Anda, biasanya berada di: `C:\xampp\htdocs\`
-3. *Paste* (tempel) folder **`portal-berita`** ke dalam folder `htdocs` tersebut.
+3. *Paste* (tempel) folder **`WebsiteBerita`** ke dalam folder `htdocs` tersebut.
 
 ### Langkah 3: Aktifkan Server XAMPP
 1. Buka aplikasi **XAMPP Control Panel** di komputer Anda.
@@ -78,9 +78,9 @@ INSERT INTO artikel (judul, ringkasan, konten, gambar) VALUES
 
 Website Anda kini sudah siap digunakan!
 
-    Untuk melihat Halaman Utama Portal Berita: Buka browser dan akses http://localhost/portal-berita/
+    Untuk melihat Halaman Utama Portal Berita: Buka browser dan akses http://localhost/WebsiteBerita/
 
-    Untuk masuk ke Dashboard Admin: Buka http://localhost/portal-berita/login.php
+    Untuk masuk ke Dashboard Admin: Buka http://localhost/WebsiteBerita/login.php
 
 Kredensial Login Default:
 
