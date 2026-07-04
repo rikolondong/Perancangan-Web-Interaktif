@@ -1,4 +1,4 @@
-readme_content_v2 = """# WebsiteCRUD - Sistem Pengelolaan Data Mahasiswa
+"""# WebsiteCRUD - Sistem Pengelolaan Data Mahasiswa
 
 Aplikasi web sederhana untuk melakukan operasi **CRUD (Create, Read, Update, Delete)** Data Mahasiswa. Proyek ini dibangun menggunakan **PHP Native** dan **MySQL** sebagai backend, serta dipercantik menggunakan **Bootstrap 5**, **Google Fonts (Poppins)**, dan **FontAwesome** untuk menghasilkan antarmuka pengguna (UI) yang modern, bersih, dan responsif.
 
