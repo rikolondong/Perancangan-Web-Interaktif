@@ -37,3 +37,64 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,
     dibuat_pada TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+```
+
+# ⚙️ Tahap Instalasi & Konfigurasi
+
+Ikuti langkah-langkah di bawah ini secara berurutan untuk memasang project di server lokal Anda (XAMPP):
+Langkah 1: Persiapan Folder di XAMPP
+
+    Buka direktori instalasi XAMPP Anda (biasanya di C:\xampp\).
+
+    Masuk ke dalam folder htdocs.
+
+    Buat sebuah folder baru di dalam htdocs dengan nama WebsiteLogin.
+
+Langkah 2: Menyalin File Project
+
+Letakkan seluruh file kode PHP ke dalam folder C:\xampp\htdocs\WebsiteLogin\. Pastikan struktur filenya adalah sebagai berikut:
+```
+WebsiteLogin/
+├── config.php        # Konfigurasi koneksi database MySQL
+├── login.php         # Tampilan & logika validasi masuk akun
+├── register.php      # Tampilan & logika pendaftaran akun baru
+├── dashboard.php     # Halaman utama terproteksi session
+└── logout.php        # Menghapus session dan keluar dari aplikasi
+```
+Langkah 3: Membuat Database & Tabel di phpMyAdmin
+
+    Jalankan aplikasi XAMPP Control Panel.
+
+    Klik tombol Start pada bagian Apache dan MySQL hingga indikatornya berwarna hijau.
+
+    Buka browser Anda dan akses url: http://localhost/phpmyadmin/.
+
+    Buat sebuah database baru bernama db_pengguna.
+
+    Klik database db_pengguna tersebut, lalu masuk ke tab SQL.
+
+    Salin skrip CREATE TABLE yang tertera pada bagian Struktur Tabel Database di atas, tempel (paste) ke kolom SQL phpMyAdmin, lalu klik tombol Go / Kirim.
+
+Langkah 4: Menjalankan Aplikasi
+
+    Buka tab baru di browser Anda.
+
+    Akses halaman login melalui tautan berikut:
+    Plaintext
+
+    http://localhost/WebsiteLogin/login.php
+
+    Selamat! Website uji coba siap digunakan. Anda bisa menekan opsi Sign up terlebih dahulu untuk membuat akun baru, lalu mencoba masuk menggunakan akun tersebut untuk mengakses Dashboard.
+
+🔍 Penjelasan Alur Kode
+
+    config.php: Menggunakan ekstensi mysqli bawaan PHP untuk membuka jalur komunikasi ke server database MySQL lokal (localhost) dengan user default root dan tanpa password ("").
+
+    register.php: Menerima input data formulir menggunakan metode POST. Skrip ini membersihkan input string guna mencegah serangan SQL Injection, memeriksa keunikan username, mengenkripsi password, lalu mengeksekusi perintah INSERT INTO untuk menyimpan data ke database.
+
+    login.php: Mencari baris data berdasarkan username yang diinput. Jika ditemukan, fungsi password_verify() akan membandingkan password mentah dari form dengan password hash yang ada di database. Jika cocok, data user disimpan ke dalam larik superglobal $_SESSION.
+
+    dashboard.php: Memeriksa keberadaan variable $_SESSION['username']. Jika kosong, proses eksekusi dihentikan (exit()) dan browser dipaksa memuat ulang halaman login.php. Jika ada, konten rahasia dashboard akan dirender.
+
+    logout.php: Menghapus seluruh variabel session aktif melalui session_unset() dan menghancurkan session dengan session_destroy(), memastikan pengguna benar-benar keluar dengan aman sebelum dialihkan ke login.
+
