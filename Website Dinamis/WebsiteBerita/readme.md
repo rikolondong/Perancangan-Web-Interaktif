@@ -74,7 +74,7 @@ INSERT INTO artikel (judul, ringkasan, konten, gambar) VALUES
 ```
 
 
-Langkah 5: Jalankan Website
+### Langkah 5: Jalankan Website
 
 Website Anda kini sudah siap digunakan!
 
